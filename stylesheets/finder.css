@@ -8,13 +8,13 @@ body {
 }
 
 #outermost {
-/*  width: 98%; */
-  display:inline-block;
+  max-width: 850px;
+  margin:auto;
+  display:block;
 }
 
 .l0 {
   position: relative;
-  /* width: 98%; */
   background-color: #ebd4c7;
   color: #ea4800;
   margin-bottom: 15px;
