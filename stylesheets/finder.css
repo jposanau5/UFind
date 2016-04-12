@@ -8,13 +8,13 @@ body {
 }
 
 #outermost {
-  width: 98%;
+/*  width: 98%; */
   display:inline-block;
 }
 
 .l0 {
   position: relative;
-  width: 98%;
+  /* width: 98%; */
   background-color: #ebd4c7;
   color: #ea4800;
   margin-bottom: 15px;
@@ -27,7 +27,7 @@ body {
 
 .l1 {
   position: relative;
-  width: 98%;
+  /*width: 98%;*/
   background-color: #FCF8E3;
   color: #000099; /* navy; */
   margin-bottom: 10px;
@@ -40,8 +40,8 @@ body {
 
 .l2 {
   position: relative;
-  width: 98%;
-  display: inline-block;
+  /*width: 98%;*/
+  display: block;
   margin-bottom: 10px;
   padding: 6px 5px 6px 10px; /* top right bottom left */
   -webkit-border-radius: 3px;
@@ -52,8 +52,8 @@ body {
 
 .l3 {
   position: relative;
-  width: 98%;
-  display: inline-block;
+  /*width: 98%;*/
+  display: block;
   margin-bottom: 3px;
   padding: 3px 6px;
   -webkit-border-radius: 3px;
@@ -64,8 +64,8 @@ body {
 
 .l4 {
   position: relative;
-  width: 98%;
-  display: inline-block;
+  /*width: 98%;*/
+  display: block;
   border: black solid thin;  /* border: 1px solid #EEDC7D; */
   margin: 3px;
   padding: 3px 6px;
@@ -121,3 +121,6 @@ body {
   border-bottom: 10px solid transparent;
   -webkit-border-radius: 3px;
 }
+
+
+
