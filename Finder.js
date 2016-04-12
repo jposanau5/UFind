@@ -8,7 +8,7 @@ if (!String.prototype.trim) {
   };
 }
 
-// treeTable sample data
+// treeTable
 var tt = [["C&M", "Construction and Maintenance", "(none)", 0, "", ""],
 ["AACU0001", "Buildings & Facilities", "C&M", 1, "", ""],
 ["72100000", "Building and facility maintenance and repair services", "AACU0001", 2, "Excludes PCs, PC accessories, or MFD (Printer) Service.   Related:", ""],
@@ -283,10 +283,11 @@ function iter(pn) { // parentNode, tableRow
     expCollNode = cdNode.appendChild(document.createElement("div"));
     expCollNode.className = "expColl";
     $(expCollNode).click(function () {
-      if ($(this).css("border-right-color") === "rgb(0, 0, 255)") {
+      if ($(this).css("border-right-color") === "rgb(0, 0, 255)" || $(this).css("border-right-color") === "blue") {
         $(this).css("border-right-color", "grey");
         $(this).css("border-top-color", "grey");
-        $(this).parent().children("div.l" + (level + 1)).slideDown();
+        //$(this).parent().children("div.l" + (level + 1)).slideDown();
+        $(this).parent().children("div.l" + (level + 1)).show();
       } else {
         $(this).css("border-right-color", "blue");
         $(this).css("border-top-color", "blue");
