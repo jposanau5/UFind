@@ -2147,38 +2147,54 @@ var tt = [["C&M", "Construction and Maintenance", "(none)", 0, "", ""],
 ["43842100", "Security Event & Information Management Software", "43840000", 3, "", [["120188-012", "General Build Construct & Maint (Major)", "Box & Co Pty Ltd"], ["530313-000", "Cathedral Sq Refurb Stages 1 & 2", "Box & Co Pty Ltd"], ["530387-000", "Refurb Block A Wynnum CSS - SP1", "De Luca"]]],
 ["43842200", "Security Management Application Services", "43840000", 3, "", [["510139-001", "Comprehensive Lift Maintenance", "Advance Group Of Companies Qld Pty"], ["530712-000", "Hangar 7 Temp Structural Works", "Dart Holdings Pty Ltd T/A A Dart &"]]]];
 
+
 // tableRow global variable
 var tr;
 
 // *********************************************************************************
-// highlight all matches within orginal string
+// replace target text node with HTML containing spans around text to be highlighted
 // *********************************************************************************
-function highlightString(found, origStr) {
+function highlightNode(found, target, parent) {
   "use strict";
   var strHL = "", // string reformatted to include <span> tags to highlight the match
     start = 0, // position (in a string) to begin next search
     pos = 0, // position (in a string) where the match occurred
-    i = 0; // counter to move through array of found substrings
+    i = 0, // counter to move through array of found substrings
+    newNode = null; // new inserted node (passed back to calling function to replace deleted)
+    
   
-  if (found === null) {
-    return origStr;
+  for (i = 0; i < found.length; i += 1) {
 
-  } else { // highlight all matches within string
-    for (i = 0; i < found.length; i += 1) {
-      pos = origStr.indexOf(found[i], start);
-      strHL = strHL + origStr.slice(start, pos) + "<span class='highlight'>" + found[i] + "</span>";
-      start = pos + found[i].length;
+    pos = target.data.indexOf(found[i], start);
+
+    if (pos > start) {
+      parent.insertBefore(document.createTextNode(target.data.slice(start, pos)), target);
     }
-    return (strHL + origStr.slice(start, origStr.length));
+    
+    newNode = document.createElement("span");
+    newNode.className = "highlight";
+    newNode.appendChild(document.createTextNode(found[i]));
+    parent.insertBefore(newNode, target);
+    
+    start = pos + found[i].length;
   }
+  
+  if (target.data.length > start) {
+    newNode = document.createTextNode(target.data.slice(start, target.data.length));
+    parent.insertBefore(newNode, target);
+  }
+  
+  parent.removeChild(target);
+  return newNode;
 }
+//target.insertData(0, "$");
 
-var userSearch = "road";
+var userSearch = "";
 
 // *********************************************************************************
-// recursive function to append next code hierarchy node into HTML DOM
+// recursive function to UNSPSC code table node into HTML DOM
 // *********************************************************************************
-function iter(pn) { // parentNode, tableRow
+function buildTree(pn) { // parentNode, tableRow
   "use strict";
     
   var level = tt[tr][3], // BCC hierarchy level 0 to 4.  Analogous to UNSPSC levels 1 to 4.
@@ -2204,193 +2220,86 @@ function iter(pn) { // parentNode, tableRow
   cdNode.className = "l" + level;
   
   switch (level) {
-  case 0:
-       
-    // scan description, and comment
-    foundInDescrip = tt[tr][1].match(new RegExp(userSearch, "gi")); //returns array of matches
-    foundInComment = tt[tr][4].match(new RegExp(userSearch, "gi")); //returns array of matches
+  case 0:       
+    // HTML for descrip
+    cdNode.appendChild(document.createTextNode(tt[tr][1]));
 
-    // if nothing found
-    if (foundInDescrip === null && foundInComment === null) {
-
-      // HTML for descrip without highlighting
-      cdNode.appendChild(document.createTextNode(tt[tr][1]));
-
-      // HTML for comment (if comment exists) without highlighting
-      if (tt[tr][4].trim()) {
-        commNode = cdNode.appendChild(document.createElement("div"));
-        commNode.className = "l0comment";
-        commNode.innerHTML = tt[tr][4];
-      }
-      
-    // else something found
-    } else {
-      
-      // HTML for descrip with highlighting
-      cdNode.innerHTML = highlightString(foundInDescrip, tt[tr][1]);
-      
-      // HTML for comment (if comment exists) with highlighting
-      if (tt[tr][4].trim()) {
-        commNode = cdNode.appendChild(document.createElement("div"));
-        commNode.className = "l0comment";
-        commNode.innerHTML = highlightString(foundInComment, tt[tr][4]);
-      }
+    // HTML for comment (if comment exists)
+    if (tt[tr][4].trim()) {
+      commNode = cdNode.appendChild(document.createElement("div"));
+      commNode.className = "l0comment";
+      commNode.innerHTML = tt[tr][4];
     }
     break;
       
   case 1:
+    // HTML for descrip
+    cdNode.appendChild(document.createTextNode(tt[tr][1]));
 
-    // scan description, and comment
-    foundInDescrip = tt[tr][1].match(new RegExp(userSearch, "gi")); //returns array of matches
-    foundInComment = tt[tr][4].match(new RegExp(userSearch, "gi")); //returns array of matches
-
-    // if nothing found
-    if (foundInDescrip === null && foundInComment === null) {
-
-      // HTML for descrip without highlighting
-      cdNode.appendChild(document.createTextNode(tt[tr][1]));
-
-      // HTML for comment (if comment exists) without highlighting
-      if (tt[tr][4].trim()) {
-        commNode = cdNode.appendChild(document.createElement("div"));
-        commNode.className = "l1comment";
-        commNode.innerHTML = tt[tr][4];
-      }
-      
-    // else something found
-    } else {
-      
-      // HTML for descrip with highlighting
-      cdNode.innerHTML = highlightString(foundInDescrip, tt[tr][1]);
-      
-      // HTML for comment (if comment exists) with highlighting
-      if (tt[tr][4].trim()) {
-        commNode = cdNode.appendChild(document.createElement("div"));
-        commNode.className = "l1comment";
-        commNode.innerHTML = highlightString(foundInComment, tt[tr][4]);
-      }
+    // HTML for comment (if comment exists)
+    if (tt[tr][4].trim()) {
+      commNode = cdNode.appendChild(document.createElement("div"));
+      commNode.className = "l1comment";
+      commNode.innerHTML = tt[tr][4];
     }
     break;
       
   case 2:
+    // HTML for descrip
+    cdNode.appendChild(document.createTextNode(tt[tr][1]));
 
-    // scan description, and comment
-    foundInDescrip = tt[tr][1].match(new RegExp(userSearch, "gi")); //returns array of matches
-    foundInComment = tt[tr][4].match(new RegExp(userSearch, "gi")); //returns array of matches
-
-    // if nothing found
-    if (foundInDescrip === null && foundInComment === null) {
-
-      // HTML for descrip without highlighting
-      cdNode.appendChild(document.createTextNode(tt[tr][1]));
-
-      // HTML for comment (if comment exists) without highlighting
-      if (tt[tr][4].trim()) {
-        commNode = cdNode.appendChild(document.createElement("div"));
-        commNode.className = "l2comment";
-        commNode.innerHTML = tt[tr][4];
-      }
-      
-    // else something found
-    } else {
-      
-      // HTML for descrip with highlighting
-      cdNode.innerHTML = highlightString(foundInDescrip, tt[tr][1]);
-      
-      // HTML for comment (if comment exists) with highlighting
-      if (tt[tr][4].trim()) {
-        commNode = cdNode.appendChild(document.createElement("div"));
-        commNode.className = "l2comment";
-        commNode.innerHTML = highlightString(foundInComment, tt[tr][4]);
-      }
+    // HTML for comment (if comment exists)
+    if (tt[tr][4].trim()) {
+      commNode = cdNode.appendChild(document.createElement("div"));
+      commNode.className = "l2comment";
+      commNode.innerHTML = tt[tr][4];
     }
     break;
       
   case 3:
+    // HTML for code and descrip
+    cdNode.appendChild(document.createTextNode(tt[tr][0] + "\u00A0\u00A0\u00A0\u00A0" + tt[tr][1]));
 
-    // scan code, description, and comment
-    foundInCode = tt[tr][0].match(new RegExp(userSearch, "gi")); //returns array of matches
-    foundInDescrip = tt[tr][1].match(new RegExp(userSearch, "gi")); //returns array of matches
-    foundInComment = tt[tr][4].match(new RegExp(userSearch, "gi")); //returns array of matches
-    // for (ci = 0; ci <= tt[tr][5].length-1; ci++) {
-    //   tempArray = tt[tr][5][ci].match(new RegExp(userSearch, "gi"));
-    //   if (tempArray !== null) {
-    //     foundInContractsList.push(tempArray);
-    //   }
+    // HTML for comment (if comment exists)
+    if (tt[tr][4].trim()) {
+      commNode = cdNode.appendChild(document.createElement("div"));
+      commNode.className = "l3or4comment";
+      commNode.innerHTML = tt[tr][4];
+    }
 
-    // if nothing found
-    if (foundInCode === null && foundInDescrip === null && foundInComment === null && foundInContractsList === null) {
-
-      // HTML for code and descrip without highlighting
-      cdNode.appendChild(document.createTextNode(tt[tr][0] + "\u00A0\u00A0\u00A0\u00A0" + tt[tr][1]));
-
-      // HTML for comment (if comment exists) without highlighting
-      if (tt[tr][4].trim()) {
-        commNode = cdNode.appendChild(document.createElement("div"));
-        commNode.className = "l3or4comment";
-        commNode.innerHTML = tt[tr][4];
-      }
-      
-      // HTML for contracts list (if contracts list exists) without highlighting
-      if (tt[tr][5]) {
-        contlistNode = cdNode.appendChild(document.createElement("table"));
-        contlistNode.className = "contListTable";
-        for (ci = 0; ci <= tt[tr][5].length - 1; ci += 1) {
-          contlistRow = contlistNode.insertRow(0);
-          contlistRow.insertCell(0).innerHTML = tt[tr][5][ci][0];
-          contlistRow.insertCell(1).innerHTML = tt[tr][5][ci][1];
-          contlistRow.insertCell(2).innerHTML = tt[tr][5][ci][2];
-        }
-      }
-      
-    // else something found
-    } else {
-      
-      // HTML for code and descrip with highlighting
-      cdNode.innerHTML = highlightString(foundInCode, tt[tr][0]) + 
-        "\u00A0\u00A0\u00A0\u00A0" + highlightString(foundInDescrip, tt[tr][1]);
-      
-      // HTML for comment (if comment exists) with highlighting
-      if (tt[tr][4].trim()) {
-        commNode = cdNode.appendChild(document.createElement("div"));
-        commNode.className = "l3or4comment";
-        commNode.innerHTML = highlightString(foundInComment, tt[tr][4]);
+    // HTML for contracts list (if contracts list exists)
+    if (tt[tr][5]) {
+      contlistNode = cdNode.appendChild(document.createElement("table"));
+      contlistNode.className = "contListTable";
+      for (ci = 0; ci <= tt[tr][5].length - 1; ci += 1) {
+        contlistRow = contlistNode.insertRow(0);
+        contlistRow.insertCell(0).innerHTML = tt[tr][5][ci][0];
+        contlistRow.insertCell(1).innerHTML = tt[tr][5][ci][1];
+        contlistRow.insertCell(2).innerHTML = tt[tr][5][ci][2];
       }
     }
     break;
       
   case 4:
-      
-    // scan code, description, and comment
-    foundInCode = tt[tr][0].match(new RegExp(userSearch, "gi")); //returns array of matches
-    foundInDescrip = tt[tr][1].match(new RegExp(userSearch, "gi")); //returns array of matches
-    foundInComment = tt[tr][4].match(new RegExp(userSearch, "gi")); //returns array of matches
+    // HTML for code and descrip
+    cdNode.appendChild(document.createTextNode(tt[tr][0] + "\u00A0\u00A0" + tt[tr][1]));
 
-    // if nothing found
-    if (foundInCode === null && foundInDescrip === null && foundInComment === null) {
+    // HTML for comment (if comment exists)
+    if (tt[tr][4].trim()) {
+      commNode = cdNode.appendChild(document.createElement("div"));
+      commNode.className = "l3or4comment";
+      commNode.innerHTML = tt[tr][4];
+    }
 
-      // HTML for code and descrip without highlighting
-      cdNode.appendChild(document.createTextNode(tt[tr][0] + "\u00A0\u00A0" + tt[tr][1]));
-
-      // HTML for comment (if comment exists) without highlighting
-      if (tt[tr][4].trim()) {
-        commNode = cdNode.appendChild(document.createElement("div"));
-        commNode.className = "l3or4comment";
-        commNode.innerHTML = tt[tr][4];
-      }
-      
-    // else something found
-    } else {
-      
-      // HTML for code and descrip with highlighting
-      cdNode.innerHTML = highlightString(foundInCode, tt[tr][0]) + 
-        "\u00A0\u00A0" + highlightString(foundInDescrip, tt[tr][1]);
-      
-      // HTML for comment (if comment exists) with highlighting
-      if (tt[tr][4].trim()) {
-        commNode = cdNode.appendChild(document.createElement("div"));
-        commNode.className = "l3or4comment";
-        commNode.innerHTML = highlightString(foundInComment, tt[tr][4]);
+    // HTML for contracts list (if contracts list exists)
+    if (tt[tr][5]) {
+      contlistNode = cdNode.appendChild(document.createElement("table"));
+      contlistNode.className = "contListTable";
+      for (ci = 0; ci <= tt[tr][5].length - 1; ci += 1) {
+        contlistRow = contlistNode.insertRow(0);
+        contlistRow.insertCell(0).innerHTML = tt[tr][5][ci][0];
+        contlistRow.insertCell(1).innerHTML = tt[tr][5][ci][1];
+        contlistRow.insertCell(2).innerHTML = tt[tr][5][ci][2];
       }
     }
     break;
@@ -2422,36 +2331,101 @@ function iter(pn) { // parentNode, tableRow
   while (tr < tt.length - 1 && level < tt[tr + 1][3]) {
     tr += 1;
     //alert("ABOUT TO CALL ITER:: tr:" + tr + ", level:" + level);
-    if (iter(cdNode)) {
+    if (buildTree(cdNode)) {
       childMatchesUserSearch = true;
     }
   }
+
+  $(cdNode).hide();
+  return false;
   
-  if (foundInCode !== null || foundInDescrip !== null || foundInComment !== null || childMatchesUserSearch) {
-    //$(cdNode).css("background-color", "blue");
-    return true;
-  } else {
-    $(cdNode).hide();
-    return false;
-  }  
 }
 
+
+// ****************************************************************************************
+// recursive function traverse UNSPSC hierarchy and highlight text matching the user search
+// ****************************************************************************************
+function treeHighlight(pn) { // parentNode
+  "use strict";
+  var node = null,
+    fis = null;
+  
+  for (node = pn.firstChild; node; node = node.nextSibling) {
+    if (node.nodeType === 3) { // text nodes only
+      fis = node.data.match(new RegExp(userSearch, "gi")); //returns array of matches
+      if (fis !== null) {
+        node = highlightNode(fis, node, pn); //replace the current node with highlighted node(s)
+      }
+    }
+    else {
+      treeHighlight(node);
+    }
+  }
+  return 1;
+}
+
+
+// ***************
+// main function
+// ***************
 $(document).ready(function () {
   "use strict";
   
+  // create search box
+  var searchInputNode = document.body.appendChild(document.createElement("input"));
+  searchInputNode.setAttribute("type", "text");
+  searchInputNode.setAttribute("name", "searchbox");
+  searchInputNode.setAttribute("placeholder", "Search product categories, contracts and vendors");
+  
+  userSearch = "xzxzxzx";   // ******************************************
+
   // start the table row index at one row prior to the first row of the table
   tr = -1;
-
+  
   // outermostNode
   var outer = document.body.appendChild(document.createElement("div"));
   outer.setAttribute("id", "outermost");
   $(outer).hide(); // hide the code tree while under construction
-  
-  //alert(tt.length);
+
   while (tr < tt.length - 1) {
     tr += 1;
-    iter(outer);
+    buildTree(outer);
   }
-  //alert("finished")
   $(outer).show();
+  
+  
+
+  // respond to search enter key pressed
+  $(searchInputNode).keypress(function (e) {
+    if (e.which == 10 || e.which == 13) { 
+      userSearch = $("input").val();
+
+      //hide all nodes and remove highlighting
+      $("div:has(span)").hide();
+      $("span.highlight").contents().unwrap();
+      outer.normalize();
+      
+      // highlight nodes and show
+//      userSearch = "services"; // ******************************************
+      treeHighlight(outer);
+      $("div:has(span)").show();
+  
+
+      $(outer).show();
+  
+  
+    }
+  });  
+  
 });
+
+//$("span").css("background-color", "red");
+
+//$("span.highlight").each(function() {
+//var div0 = document.querySelector(".highlight").parentElement.nextSibling.childNodes[0];
+//div0.firstChild.insertData(2, "$");
+
+// NOT WORKING:
+//$("div").filter(":visible").hide();
+//$("div span.highlight").show();
+
