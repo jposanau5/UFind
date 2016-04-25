@@ -10,7 +10,16 @@ body {
 #outermost {
   max-width: 850px;
   margin:auto;
-  display:block;
+}
+
+input {
+  width: 810px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 5px 10px 5px 10px;
+  font-size: 1.0em;
+  display: block;
 }
 
 .l0 {
@@ -121,6 +130,3 @@ body {
   border-bottom: 10px solid transparent;
   -webkit-border-radius: 3px;
 }
-
-
-
