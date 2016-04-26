@@ -2149,7 +2149,8 @@ var tt = [["C&M", "Construction and Maintenance", "(none)", 0, "", ""],
 
 
 // tableRow global variable
-var tr;
+var tr = null,
+    vendorOptionInput = null;
 
 // *********************************************************************************
 // replace target text node with HTML containing spans around text to be highlighted
@@ -2273,9 +2274,11 @@ function buildTree(pn) { // parentNode, tableRow
       contlistNode.className = "contListTable";
       for (ci = 0; ci <= tt[tr][5].length - 1; ci += 1) {
         contlistRow = contlistNode.insertRow(0);
+        contlistRow.className = "cltrow";
         contlistRow.insertCell(0).innerHTML = tt[tr][5][ci][0];
         contlistRow.insertCell(1).innerHTML = tt[tr][5][ci][1];
         contlistRow.insertCell(2).innerHTML = tt[tr][5][ci][2];
+        $(contlistRow).hide();
       }
     }
     break;
@@ -2297,9 +2300,11 @@ function buildTree(pn) { // parentNode, tableRow
       contlistNode.className = "contListTable";
       for (ci = 0; ci <= tt[tr][5].length - 1; ci += 1) {
         contlistRow = contlistNode.insertRow(0);
+        contlistRow.className = "cltrow";
         contlistRow.insertCell(0).innerHTML = tt[tr][5][ci][0];
         contlistRow.insertCell(1).innerHTML = tt[tr][5][ci][1];
         contlistRow.insertCell(2).innerHTML = tt[tr][5][ci][2];
+        $(contlistRow).hide();
       }
     }
     break;
@@ -2358,11 +2363,14 @@ function treeHighlight(pn) { // parentNode
       }
     }
     else {
-      treeHighlight(node);
+      if (node.nodeType === 1 && (node.tagName !== "TABLE" || vendorOptionInput.checked === true)) {
+        treeHighlight(node);
+      }
     }
   }
   return 1;
 }
+
 
 
 // ***************
@@ -2393,26 +2401,39 @@ $(document).ready(function () {
   }
   $(outer).show();
   
-  
+  vendorOptionInput = document.body.appendChild(document.createElement("input"));
+  vendorOptionInput.setAttribute("type", "checkbox");
+  vendorOptionInput.setAttribute("name", "searchContracts");
+  vendorOptionInput.checked = true;
+  document.body.appendChild(document.createTextNode("Include contracts"));
 
   // respond to search enter key pressed
   $(searchInputNode).keypress(function (e) {
     if (e.which == 10 || e.which == 13) { 
       userSearch = $("input").val();
-
+      
       //hide all nodes and remove highlighting
-      $("div:has(span)").hide();
+      $("tr.cltrow:has(span)").hide();
+      $("div.l4:has(span)").hide();
+      $("div.l3:has(span)").hide();
+      $("div.l2:has(span)").hide();
+      $("div.l1:has(span)").hide();
+      $("div.l0:has(span)").hide();
       $("span.highlight").contents().unwrap();
       outer.normalize();
       
       // highlight nodes and show
 //      userSearch = "services"; // ******************************************
       treeHighlight(outer);
-      $("div:has(span)").show();
-  
+      $("tr.cltrow:has(span)").show();
+      $("div.l4:has(span)").show();
+      $("div.l3:has(span)").show();
+      $("div.l2:has(span)").show();
+      $("div.l1:has(span)").show();
+      $("div.l0:has(span)").show();
 
       $(outer).show();
-  
+      //$("div.l2:has(span)").hide();
   
     }
   });  
