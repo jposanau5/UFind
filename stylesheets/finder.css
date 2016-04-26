@@ -12,7 +12,7 @@ body {
   margin:auto;
 }
 
-input {
+input[type="text"] {
   width: 810px;
   margin: auto;
   margin-top: 10px;
