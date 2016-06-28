@@ -6,9 +6,9 @@ body {
   background-color: gold; /* lime; */
   color: black;
 }
-
+ 
 #outermost {
-  max-width: 850px;
+  max-width: 810px;
   margin:auto;
 }
 
@@ -16,8 +16,35 @@ input[type="text"] {
   width: 810px;
   margin: auto;
   margin-top: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   padding: 5px 10px 5px 10px;
+  font-size: 1.0em;
+  display: block;
+}
+
+/* searchContracts */
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  position:relative;
+  top: 3px;
+  margin: 0px;  
+  padding: 0px;
+}
+
+label { 
+  font-family: "Arial", sans-serif;
+  font-size: 1.0em; 
+  margin: 0px;  
+  padding: 0px;
+}
+
+.optionsBox {
+ /* background-color: aqua; */
+  width: 810px;
+  margin: 5px auto 10px auto;
+  padding: 0px;
   font-size: 1.0em;
   display: block;
 }
@@ -116,6 +143,27 @@ input[type="text"] {
 }
 
 
+.expCollContracts {
+  position: relative;
+  display: inline-block;
+  background-color: limegreen;
+  width: 10;
+  height: 10;
+  font-size: 15px;
+  color: black;  
+  border: 1px solid black;
+  -webkit-border-radius: 2px;
+  margin-left: 10px;
+  padding: 0px 2px 0px 2px;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
 
 /* blue expand/collapse button/triangle at top right of elements with children. */
 .expColl {
@@ -128,8 +176,34 @@ input[type="text"] {
   border-right: 10px solid blue;
   border-top: 10px solid blue;
   border-bottom: 10px solid transparent;
+  cursor: pointer;
   -webkit-border-radius: 3px;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
 }
 
+.cdDEL {
+  color: red;
+  background-color: black;
+}
 
+.cdNEW {
+  color: black;
+  background-color: yellow;
+}
+
+.cdHID {
+  color: lightgray;
+  background-color: darkgray;
+}
+
+.cdCHG {
+  color: saddlebrown;
+  background-color: lightgoldenrodyellow;
+}
 
