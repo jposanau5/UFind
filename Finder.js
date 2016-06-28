@@ -12,9 +12,15 @@ if (!String.prototype.trim) {
 
 // tableRow global variable
 var tr = null,
-    vendorOptionInput = null;
+    optionsDiv = null,
+    vendorOptionInput = null,
+    vendorOptionLabel = null,
+    expandAllOptionInput = null,
+    expandAllOptionLabel = null,
+    showMarkupOptionInput = null,
+    showMarkupOptionLabel = null;
 
-// *********************************************************************************
+  // *********************************************************************************
 // replace target text node with HTML containing spans around text to be highlighted
 // *********************************************************************************
 function highlightNode(found, target, parent) {
@@ -55,23 +61,26 @@ function highlightNode(found, target, parent) {
 var userSearch = "";
 
 // *********************************************************************************
-// recursive function to UNSPSC code table node into HTML DOM
+// recursive function to write UNSPSC code table node into HTML DOM
 // *********************************************************************************
 function buildTree(pn) { // parentNode, tableRow
   "use strict";
     
-  var level = tt[tr][3], // BCC hierarchy level 0 to 4.  Analogous to UNSPSC levels 1 to 4.
+  var level = tt[tr][3], // BCC hierarchy level 0 to 4.  Same as UNSPSC levels 1 to 4.
     cdNode = pn.appendChild(document.createElement("div")), // code and description node
     commNode = null, // comment node
-    expCollNode = null, // expand-collapse toggle indicator
-    delNode = null, // deleted text -- is this required?
+    expCollNode = null, // expand-collapse toggle indicator for tree
+    showHideContracts = null, // expand-collapse toggle indicator for contracts
+    editNode = null, // three letter code: NEW/DEL/HID/CHG = new,deleted,hidden,changed
+    delNode = null, // deleted text
     contlistNode = null, // contracts list table node
     contlistRow = null, // contracts list table row
 
-    // code, description, comment strings
-    code = null,
-    descrip = null,
+    // code, description, comment, edit strings
+    codeDesc = "",
+//    descrip = null,
     comment = null,
+    editCode = null,
 
     // search results
     foundInCode = null,
@@ -83,132 +92,86 @@ function buildTree(pn) { // parentNode, tableRow
 
   cdNode.className = "l" + level;
   
-  switch (level) {
-  case 0:       
-    // HTML for descrip
-    cdNode.appendChild(document.createTextNode(tt[tr][1]));
-
-    // HTML for comment (if comment exists)
-    if (tt[tr][4].trim()) {
-      commNode = cdNode.appendChild(document.createElement("div"));
-      commNode.className = "l0comment";
-      commNode.innerHTML = tt[tr][4];
+  // code and description
+  if (level >= 3) { // only disply the code for levels 3&4
+    codeDesc = tt[tr][0] + "\u00A0\u00A0"; // follow with padding spaces
+    if (level === 3) {
+      codeDesc = codeDesc + "\u00A0\u00A0";  // more padding for level 3
     }
-    break;
-      
-  case 1:
-    // HTML for descrip
-    cdNode.appendChild(document.createTextNode(tt[tr][1]));
+  }
+  codeDesc = codeDesc + tt[tr][1];
+  
+  // HTML for NEW/DEL/HID/CHG markers
+  if (tt[tr][6].trim() && false) {
+    editCode = tt[tr][6].trim();
+    editNode = cdNode.appendChild(document.createElement("span"));
+    editNode.className = "cd" + editCode;
+    editNode.appendChild(document.createTextNode("\u00a0:" + editCode + "\u00a0"));      
 
-    // HTML for comment (if comment exists)
-    if (tt[tr][4].trim()) {
-      commNode = cdNode.appendChild(document.createElement("div"));
-      commNode.className = "l1comment";
-      commNode.innerHTML = tt[tr][4];
+    // HTML for code and descrip (for deleted codes)
+    if (editCode === "DEL") {
+      // deleted code and descripition are placed inside HTML <del> tags
+      delNode = cdNode.appendChild(document.createElement("del"));
+      delNode.appendChild(document.createTextNode(codeDesc));
     }
+  }
 
-    // HTML for contracts list (which should not exist at level 1)
-    if (tt[tr][5] = "Y") {
-      contlistNode = cdNode.appendChild(document.createElement("table"));
-      contlistNode.className = "contListTable";
-      
-      while (getCC(tt[tr][0])) {
-        contlistRow = contlistNode.insertRow(-1);
-        contlistRow.className = "cltrow";
-        contlistRow.insertCell(0).innerHTML = cc[ccIndex - 1][1];
-        contlistRow.insertCell(1).innerHTML = cc[ccIndex - 1][2];
-        contlistRow.insertCell(2).innerHTML = cc[ccIndex - 1][3];
-        $(contlistRow).hide();
+  // HTML for code and descrip (excluding deleted codes)
+  if (editCode !== "DEL") {
+    cdNode.appendChild(document.createTextNode(codeDesc));
+  }
+  
+  // HTML for a contracts-exist indicator control
+  if (tt[tr][5].trim() === "Y") {
+    showHideContracts = cdNode.appendChild(document.createElement("div"));
+    showHideContracts.className = "expCollContracts";
+    showHideContracts.appendChild(document.createTextNode("Contracts"));
+    $(showHideContracts).click(function () {
+      if ($(this).css("background-color") === "rgb(50, 205, 50)" || $(this).css("background-color") === "limegreen") {
+        $(this).css("background-color", "grey");
+        $(this).parent().children("table.contListTable").show();
+        $(this).parent().children("table.contListTable").children().children().show();
+      } else {
+        $(this).css("background-color", "limegreen");
+        $(this).parent().children("table.contListTable").hide();
+        $(this).parent().children("table.contListTable").children().children().hide();        $(this).parent().children("table.contListTable").children().children("tr:has(span.highlight)").show();        $(this).parent().children("table.contListTable").children().children("tr:has(span.highlight)").parent().parent().show();
       }
-    }
-    break;
-      
-  case 2:
-    // HTML for descrip
-    cdNode.appendChild(document.createTextNode(tt[tr][1]));
-
-    // HTML for comment (if comment exists)
-    if (tt[tr][4].trim()) {
+    });    
+  }
+  
+  // HTML for comment (if comment exists)
+  if (tt[tr][4].trim()) {
+    if (editCode !== "DEL") {
       commNode = cdNode.appendChild(document.createElement("div"));
-      commNode.className = "l2comment";
-      commNode.innerHTML = tt[tr][4];
+    } else {
+      // deleted code's comment also placed inside HTML <del> tags
+      commNode = delNode.appendChild(document.createElement("div"));
     }
-
-    // HTML for contracts list (which should not exist at level 2)
-    if (tt[tr][5] = "Y") {
-      contlistNode = cdNode.appendChild(document.createElement("table"));
-      contlistNode.className = "contListTable";
-      
-      while (getCC(tt[tr][0])) {
-        contlistRow = contlistNode.insertRow(-1);
-        contlistRow.className = "cltrow";
-        contlistRow.insertCell(0).innerHTML = cc[ccIndex - 1][1];
-        contlistRow.insertCell(1).innerHTML = cc[ccIndex - 1][2];
-        contlistRow.insertCell(2).innerHTML = cc[ccIndex - 1][3];
-        $(contlistRow).hide();
-      }
-    }
-    break;
-      
-  case 3:
-    // HTML for code and descrip
-    cdNode.appendChild(document.createTextNode(tt[tr][0] + "\u00A0\u00A0\u00A0\u00A0" + tt[tr][1]));
-
-    // HTML for comment (if comment exists)
-    if (tt[tr][4].trim()) {
-      commNode = cdNode.appendChild(document.createElement("div"));
+    
+    // choose appropriate comment class
+    if (level <= 2) {
+      commNode.className = "l" + level + "comment";
+    } else {
       commNode.className = "l3or4comment";
-      commNode.innerHTML = tt[tr][4];
     }
+    commNode.innerHTML = tt[tr][4];
+  }        
 
-    // HTML for contracts list (if contracts list exists)
-    if (tt[tr][5] = "Y") {
-      contlistNode = cdNode.appendChild(document.createElement("table"));
-      contlistNode.className = "contListTable";
-      
-      while (getCC(tt[tr][0])) {
-        contlistRow = contlistNode.insertRow(-1);
-        contlistRow.className = "cltrow";
-        contlistRow.insertCell(0).innerHTML = cc[ccIndex - 1][1];
-        contlistRow.insertCell(1).innerHTML = cc[ccIndex - 1][2];
-        contlistRow.insertCell(2).innerHTML = cc[ccIndex - 1][3];
-        $(contlistRow).hide();
-      }
-    }
-    break;
-      
-  case 4:
-    // HTML for code and descrip
-    //cdNode.appendChild(document.createElement("del"));
-    cdNode.appendChild(document.createTextNode(tt[tr][0] + "\u00A0\u00A0" + tt[tr][1]));
+  // HTML for contracts list (if contracts list exists)
+  if (tt[tr][5] = "Y") {
+    contlistNode = cdNode.appendChild(document.createElement("table"));
+    contlistNode.className = "contListTable";
+    $(contlistNode).hide();
 
-    // HTML for comment (if comment exists)
-    if (tt[tr][4].trim()) {
-      commNode = cdNode.appendChild(document.createElement("div"));
-      commNode.className = "l3or4comment";
-      commNode.innerHTML = tt[tr][4];
+    while (getCC(tt[tr][0])) {
+      contlistRow = contlistNode.insertRow(-1);
+      contlistRow.className = "cltrow";
+      contlistRow.insertCell(0).innerHTML = cc[ccIndex - 1][1];
+      contlistRow.insertCell(1).innerHTML = cc[ccIndex - 1][2];
+      contlistRow.insertCell(2).innerHTML = cc[ccIndex - 1][3];
+      $(contlistRow).hide();
     }
-
-    // HTML for contracts list (if contracts list exists)
-    if (tt[tr][5] = "Y") {
-      contlistNode = cdNode.appendChild(document.createElement("table"));
-      contlistNode.className = "contListTable";
-      
-      while (getCC(tt[tr][0])) {
-        contlistRow = contlistNode.insertRow(-1);
-        contlistRow.className = "cltrow";
-        contlistRow.insertCell(0).innerHTML = cc[ccIndex - 1][1];
-        contlistRow.insertCell(1).innerHTML = cc[ccIndex - 1][2];
-        contlistRow.insertCell(2).innerHTML = cc[ccIndex - 1][3];
-        $(contlistRow).hide();
-      }
-    }
-    break;
-      
-  default:
-    cdNode.appendChild(document.createTextNode(tt[tr][1])); // FIX THIS CODE
-    break;
-  }    
+  }  
     
   // HTML for expand/collapse indicator control
   if (tr < tt.length - 1 && level < tt[tr + 1][3]) {
@@ -218,12 +181,13 @@ function buildTree(pn) { // parentNode, tableRow
       if ($(this).css("border-right-color") === "rgb(0, 0, 255)" || $(this).css("border-right-color") === "blue") {
         $(this).css("border-right-color", "grey");
         $(this).css("border-top-color", "grey");
-        //$(this).parent().children("div.l" + (level + 1)).slideDown();
         $(this).parent().children("div.l" + (level + 1)).show();
       } else {
         $(this).css("border-right-color", "blue");
         $(this).css("border-top-color", "blue");
         $(this).parent().children("div.l" + (level + 1)).hide();
+        //$(this).parent().children("div.l" + (level + 1) + ":has(span.highlight)").css("background-color", "grey");
+        $(this).parent().children("div.l" + (level + 1) + ":has(span.highlight)").show();
       }
     });
   }
@@ -281,8 +245,37 @@ $(document).ready(function () {
   searchInputNode.setAttribute("name", "searchbox");
   searchInputNode.setAttribute("placeholder", "Search product categories, contracts and vendors");
   
-  userSearch = "xzxzxzx";   // ******************************************
+  userSearch = "build";   // ******************************************
 
+  optionsDiv = document.body.appendChild(document.createElement("div"));
+  optionsDiv.className = "optionsBox";
+  
+  vendorOptionInput = optionsDiv.appendChild(document.createElement("input"));
+  vendorOptionInput.setAttribute("type", "checkbox");
+  vendorOptionInput.setAttribute("name", "searchContracts");
+  vendorOptionInput.checked = false;
+  vendorOptionLabel = optionsDiv.appendChild(document.createElement("label"));
+  vendorOptionLabel.setAttribute("for", "searchContracts");
+  vendorOptionLabel.appendChild(document.createTextNode("Include Contracts \u00A0\u00A0"));
+  
+  expandAllOptionInput = optionsDiv.appendChild(document.createElement("input"));
+  expandAllOptionInput.setAttribute("type", "checkbox");
+  expandAllOptionInput.setAttribute("name", "expandAll");
+  expandAllOptionInput.checked = false;
+  expandAllOptionLabel = optionsDiv.appendChild(document.createElement("label"));
+  expandAllOptionLabel.setAttribute("for", "expandAll");
+  expandAllOptionLabel.appendChild(document.createTextNode("Expand All \u00A0\u00A0"));
+
+  showMarkupOptionInput = optionsDiv.appendChild(document.createElement("input"));
+  showMarkupOptionInput.setAttribute("type", "checkbox");
+  showMarkupOptionInput.setAttribute("name", "markup");
+  showMarkupOptionInput.setAttribute("disabled", "disabled");
+  showMarkupOptionInput.checked = false;
+  showMarkupOptionInput.className = "draft";
+  showMarkupOptionLabel = optionsDiv.appendChild(document.createElement("label"));
+  showMarkupOptionLabel.setAttribute("for", "markup");
+  showMarkupOptionLabel.appendChild(document.createTextNode("Show Markup \u00A0\u00A0"));
+  
   // start the table row index at one row prior to the first row of the table
   tr = -1;
   
@@ -296,41 +289,68 @@ $(document).ready(function () {
     buildTree(outer);
   }
   $(outer).show();
-  
-  vendorOptionInput = document.body.appendChild(document.createElement("input"));
-  vendorOptionInput.setAttribute("type", "checkbox");
-  vendorOptionInput.setAttribute("name", "searchContracts");
-  vendorOptionInput.checked = true;
-  document.body.appendChild(document.createTextNode("Include contracts"));
-
+ 
   // respond to search enter key pressed
   $(searchInputNode).keypress(function (e) {
     if (e.which == 10 || e.which == 13) { 
       userSearch = $("input").val();
       
-      //hide all nodes and remove highlighting
-      $("tr.cltrow:has(span)").hide();
-      $("div.l4:has(span)").hide();
-      $("div.l3:has(span)").hide();
-      $("div.l2:has(span)").hide();
-      $("div.l1:has(span)").hide();
-      $("div.l0:has(span)").hide();
+      //hide all nodes, expand-collapse buttons and remove highlighting
+      $("tr.cltrow").hide();
+      $("table.contListTable").hide();
+      $("div.l4").hide();
+      $("div.l3").hide();
+      $("div.l2").hide();
+      $("div.l1").hide();
+      $("div.l0").hide();
       $("span.highlight").contents().unwrap();
       outer.normalize();
+      $("div.expColl").css("display", "none");
+  //    $("div.expCollContracts").css("display", "none");
       
       // highlight nodes and show
-//      userSearch = "services"; // ******************************************
-      treeHighlight(outer);
-      $("tr.cltrow:has(span)").show();
-      $("div.l4:has(span)").show();
-      $("div.l3:has(span)").show();
-      $("div.l2:has(span)").show();
-      $("div.l1:has(span)").show();
-      $("div.l0:has(span)").show();
+      if (userSearch.trim()) {
+        treeHighlight(outer);
+      }
+      
+      if (expandAllOptionInput.checked === false) {
+        //initialise all expand-collapse buttons to blue
+        $("div.expColl").css("border-right-color", "blue");
+        $("div.expColl").css("border-top-color", "blue");
+        //internet explorer 8 seems slow to filter span.highlight
+        //consider replacing span with another element type
+        $("tr.cltrow:has(span.highlight)").show();
+        $("table.contListTable:has(span.highlight)").show();
+        $("div.l4:has(span.highlight)").show();
+        $("div.l3:has(span.highlight)").show();
+        $("div.l2:has(span.highlight)").show();
+        $("div.l1:has(span.highlight)").show();
+        $("div.l0:has(span.highlight)").show();
+      }
+      else {
+        if (vendorOptionInput.checked === true) {
+          $("table.contListTable").show();
+          $("tr.cltrow").show();
+        }
+        $("div.l4").show();
+        $("div.l3").show();
+        $("div.l2").show();
+        $("div.l1").show();
+        $("div.l0").show();
+        //initialise all expand-collapse buttons to gray
+        $("div.expColl").css("border-right-color", "gray");
+        $("div.expColl").css("border-top-color", "gray");        
+      }
 
-      $(outer).show();
-      //$("div.l2:has(span)").hide();
+      // display expand-collapse buttons for any div with child divs containing span.
+$("div.l1:not(:has(span.highlight))").parent().children("div.expColl").css("display", "block");
+//$("tr.cltrow > td:not(:has(span.highlight))").parent().parent().parent().parent().css("background-color", "red");
   
+      $("div.l2:not(:has(span.highlight))").parent().children("div.expColl").css("display", "block");
+      $("div.l3:not(:has(span.highlight))").parent().children("div.expColl").css("display", "block");
+      $("div.l4:not(:has(span.highlight))").parent().children("div.expColl").css("display", "block");
+      
+      $(outer).show();
     }
   });  
   
@@ -345,4 +365,3 @@ $(document).ready(function () {
 // NOT WORKING:
 //$("div").filter(":visible").hide();
 //$("div span.highlight").show();
-
