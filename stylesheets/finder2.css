@@ -1,0 +1,377 @@
+.hack_main
+{
+  max-width: 890px;
+  margin:auto;
+  /*background-color: #FCF8E3;*/
+  font-family: Verdana, sans-serif;
+  font-size: 1.0em; 
+  /*padding: 20px 0px 20px 0px;*/
+  padding: 20px;
+  
+}
+
+@media screen and (min-width: 0px) and (max-width: 799px) {
+  .hide-on-small { display: none;}
+}
+
+
+.hack_contract_summary
+{
+    border: 1px solid #ddd;
+    text-align: left;
+    border-collapse: collapse;
+  
+}
+
+.hack_contract_summary th, td 
+{
+    padding: 9px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.hack_contract_summary th
+{
+    background-color: #4CAF50;
+    color: white;
+}
+
+.hack_contract_summary tr:nth-child(even) 
+{
+  background-color: #f2f2f2;
+}
+
+.rrrrhack_contract_summary suppliernr
+{
+  align: right;
+}
+
+.hack_channel
+{
+    border: 1px solid #ddd;
+    text-align: left;
+    border-collapse: collapse;  
+}
+
+.hack_channel th, .hack_channel tr td
+{
+  padding: 9px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.hack_channel th
+{
+    background-color: #ff9966;
+    color: #003366;
+}
+
+
+.instructions
+{
+  position: relative;
+  display: inline-block;
+  background-color: limegreen;
+  width: 10;
+  height: 10;
+  font-size: 15px;
+  color: black;  
+  border: 1px solid black;
+  -webkit-border-radius: 2px;
+  margin-left: 10px;
+  padding: 0px 2px 0px 2px;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */  
+}
+
+.launch
+{
+  position: relative;
+  display: inline-block;
+  background-color: #1a8cff;
+  width: 10;
+  height: 10;
+  font-size: 15px;
+  color: black;  
+  border: 1px solid black;
+  -webkit-border-radius: 2px;
+  margin-left: 10px;
+  padding: 0px 2px 0px 2px;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */  
+}
+
+/* Used for the Side Cleat */
+#bcc-cleat
+{
+    float: left;
+    height: 100%;
+    width: 7px;
+    position: fixed;
+    background: url('cleat.png') repeat-y scroll 0% 0% transparent;
+    z-index: 100;
+}
+
+/*  Header Styles*/
+#bcc-header
+{
+    height: 180px;
+    background: url("bcc_headerBG.png") #ffbe17 repeat-x scroll;
+    min-width: 950px;
+}
+
+#bcc-footer
+{
+    height: 180px;
+    background: url("bcc_footerBG.png") #ffbe17 repeat-x scroll;
+    min-width: 950px;
+
+    position: absolute;
+    bottom: 0;
+}
+
+/* HeaderContent Style */
+
+
+#bcc-copycat-headerpic
+{
+    display: block;
+    margin: auto;
+
+}
+
+#bcc-copycat-footerpic
+{
+    display: block;
+    margin: auto;
+}
+
+
+
+
+body {
+  /*background: #00ff00 url("bcc_middle.png") no-repeat fixed center;*/
+  /*background-repeat: repeat-y;*/
+  background: #00ff00 url("bcc_middle.png") repeat-y fixed center;
+  background-color: #f0f0f0; /* lightblue; */
+  margin: 0px;
+
+}
+
+.highlight {
+  background-color: gold; /* lime; */
+  color: black;
+}
+ 
+#outermost {
+  max-width: 810px;
+  margin:auto;
+}
+
+input[type="text"] {
+  width: 810px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  padding: 5px 10px 5px 10px;
+  font-size: 1.0em;
+  display: block;
+}
+
+/* searchContracts */
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  position:relative;
+  top: 3px;
+  margin: 0px;  
+  padding: 0px;
+}
+
+label { 
+  font-family: "Arial", sans-serif;
+  font-size: 1.0em; 
+  margin: 0px;  
+  padding: 0px;
+}
+
+.optionsBox {
+ /* background-color: aqua; */
+  width: 810px;
+  margin: 5px auto 20px auto;
+  padding: 0px;
+  font-size: 1.0em;
+  display: block;
+}
+
+.l0 {
+  position: relative;
+  background-color: #abd4c7;
+  color: #ea4800;
+  margin-bottom: 15px;
+  padding: 10px 10px 1px 15px; /* top right bottom left */
+  -webkit-border-radius: 3px;
+  font-family: "Arial", sans-serif;
+  /*font-family: Tahoma, Helvetica, sans-serif;*/
+  font-size: 1.8em; 
+  font-weight: bold;
+}
+
+.l1 {
+  position: relative;
+  /*width: 98%;*/
+  background-color: #FCF8E3;
+  color: #000099; /* navy; */
+  margin-bottom: 10px;
+  padding: 10px 5px 1px 15px; /* top right bottom left */
+  -webkit-border-radius: 3px;
+  font-size: 1.0em; 
+  font-weight: bold;
+}
+
+.l2 {
+  position: relative;
+  /*width: 98%;*/
+  display: block;
+  margin-bottom: 10px;
+  padding: 6px 5px 6px 10px; /* top right bottom left */
+  -webkit-border-radius: 3px;
+  background-color: #3A87AD;
+  color: #f2f2f2; /* #e6e6e6; */ /* #d3d3df; */ /* white; */
+  font-size: 0.8em; 
+}
+
+.l3 {
+  position: relative;
+  /*width: 98%;*/
+  display: block;
+  margin-bottom: 3px;
+  padding: 3px 6px;
+  -webkit-border-radius: 3px;
+  background-color: #9ce59c; /* palegreen; */
+  color: #004d4d; /* darkgreen; */
+  font-size: 0.8em; 
+}
+
+.l4 {
+  position: relative;
+  /*width: 98%;*/
+  display: block;
+  border: black solid thin;  /* border: 1px solid #EEDC7D; */
+  margin: 3px;
+  padding: 3px 6px;
+  -webkit-border-radius: 3px;
+}
+
+.l0comment {
+  font-size: 0.6em; 
+  color: red;
+}
+
+.l1comment {
+  font-size: 0.6em; 
+  color:blue;
+}
+
+.l2comment {
+  font-size: 0.6em; 
+  color:yellow;
+}
+
+.l3or4comment {
+  font-size: 0.686em; 
+  color:#8400d6;
+}
+
+.contListTable {
+  margin: 3px 0px 7px 0px;
+  font-size: 0.72em;
+  color: saddlebrown;
+}
+
+.contListTable td {
+  padding: 0px 10px 0px 10px;
+  border-right: 5px solid #bfd9bf;
+  border-bottom: 1px solid #bfd9bf;
+  -webkit-border-radius: 3px;
+  background-color: lime;
+}
+
+
+.expCollContracts {
+  position: relative;
+  display: inline-block;
+  background-color: limegreen;
+  width: 10;
+  height: 10;
+  font-size: 15px;
+  color: black;  
+  border: 1px solid black;
+  -webkit-border-radius: 2px;
+  margin-left: 10px;
+  padding: 0px 2px 0px 2px;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+/* blue expand/collapse button/triangle at top right of elements with children. */
+.expColl {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid blue;
+  border-top: 10px solid blue;
+  border-bottom: 10px solid transparent;
+  cursor: pointer;
+  -webkit-border-radius: 3px;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.cdDEL {
+  color: red;
+  background-color: black;
+}
+
+.cdNEW {
+  color: black;
+  background-color: yellow;
+}
+
+.cdHID {
+  color: lightgray;
+  background-color: darkgray;
+}
+
+.cdCHG {
+  color: saddlebrown;
+  background-color: lightgoldenrodyellow;
+}
+
