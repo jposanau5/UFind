@@ -16,6 +16,14 @@
   #comingsoon { max-width: 90%; /*display: none; */ }
 }
 
+body {
+  /*background: #00ff00 url("bcc_middle.png") no-repeat fixed center;*/
+  /*background-repeat: repeat-y;*/
+  /*background: #00ff00 url("bcc_middle.png") repeat-y fixed center;*/
+  background-color: #f0f0f0; /* lightblue; */
+  margin: 0px;
+
+}
 
 .hack_contract_summary
 {
@@ -163,14 +171,7 @@
 
 
 
-body {
-  /*background: #00ff00 url("bcc_middle.png") no-repeat fixed center;*/
-  /*background-repeat: repeat-y;*/
-  background: #00ff00 url("bcc_middle.png") repeat-y fixed center;
-  background-color: #f0f0f0; /* lightblue; */
-  margin: 0px;
 
-}
 
 .highlight {
   background-color: gold; /* lime; */
