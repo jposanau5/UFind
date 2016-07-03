@@ -12,7 +12,8 @@
 
 @media screen and (min-width: 0px) and (max-width: 799px) {
   /*.hack_main img.hide-on-small { display: none;}*/
-  #comingsoon { display: none;}
+  
+  #comingsoon { max-width: 50%; /*display: none; */ }
 }
 
 
