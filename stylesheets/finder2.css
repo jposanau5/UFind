@@ -12,7 +12,7 @@
 
 @media screen and (min-width: 0px) and (max-width: 799px) {
   /*.hack_main img.hide-on-small { display: none;}*/
-  #bcc-copycat-headerpic { max-width: 100%; }
+  #bcc-copycat-headerpic { max-width: 50%; }
   #comingsoon { max-width: 90%; /*display: none; */ }
 }
 
