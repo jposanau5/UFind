@@ -135,14 +135,14 @@ body {
 }
 
 /*  Header Styles*/
-#bcc-header
+#bcc-header999
 {
     height: 180px;
     background: url("bcc_headerBG.png") #ffbe17 repeat-x scroll;
     min-width: 950px;
 }
 
-#bcc-footer
+#bcc-footer999
 {
     height: 180px;
     background: url("bcc_footerBG.png") #ffbe17 repeat-x scroll;
