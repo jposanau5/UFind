@@ -140,15 +140,15 @@ function buildTree(pn) { // parentNode, tableRow
       }
     });    
   
-    // HTML for details link
-    goToDetails = document.createElement("div");
-    goToDetails.className = "launch";
-    goToDetails.appendChild(document.createTextNode("Go To Details"));
-    
-    goToDetailsLink = cdNode.appendChild(document.createElement("a"));
-    goToDetailsLink.appendChild(goToDetails);
-    goToDetailsLink.href = "ProdCat.html";
   }
+  // HTML for details link
+  goToDetails = document.createElement("div");
+  goToDetails.className = "launch";
+  goToDetails.appendChild(document.createTextNode("Go To Details"));
+  
+  goToDetailsLink = cdNode.appendChild(document.createElement("a"));
+  goToDetailsLink.appendChild(goToDetails);
+  goToDetailsLink.href = "ProdCat.html";
   
   /*
   // HTML for details link
