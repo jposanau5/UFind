@@ -276,7 +276,7 @@ label {
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
 }
-
+ 
 /* blue expand/collapse button/triangle at top right of elements with children. */
 .expColl {
   position: absolute;
