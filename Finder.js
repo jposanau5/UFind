@@ -71,6 +71,8 @@ function buildTree(pn) { // parentNode, tableRow
     commNode = null, // comment node
     expCollNode = null, // expand-collapse toggle indicator for tree
     showHideContracts = null, // expand-collapse toggle indicator for contracts
+    goToDetails = null, // go-to-details button for this UNSPSC
+    goToDetailsLink = null, // go-to-details button link for this UNSPSC
     editNode = null, // three letter code: NEW/DEL/HID/CHG = new,deleted,hidden,changed
     delNode = null, // deleted text
     contlistNode = null, // contracts list table node
