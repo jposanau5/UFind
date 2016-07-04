@@ -139,6 +139,7 @@ function buildTree(pn) { // parentNode, tableRow
     });    
   }
   
+  /*
   // HTML for details link
   goToDetails = document.createElement("div");
   goToDetails.className = "launch";
@@ -147,7 +148,7 @@ function buildTree(pn) { // parentNode, tableRow
   goToDetailsLink = cdNode.appendChild(document.createElement("a"));
   goToDetailsLink.appendChild(goToDetails);
   goToDetailsLink.href = "ProdCat.html";
-
+*/
   
   // HTML for comment (if comment exists)
   if (tt[tr][4].trim()) {
