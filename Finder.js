@@ -137,6 +137,15 @@ function buildTree(pn) { // parentNode, tableRow
         $(this).parent().children("table.contListTable").children().children().hide();        $(this).parent().children("table.contListTable").children().children("tr:has(span.highlight)").show();        $(this).parent().children("table.contListTable").children().children("tr:has(span.highlight)").parent().parent().show();
       }
     });    
+  
+    // HTML for details link
+    goToDetails = document.createElement("div");
+    goToDetails.className = "launch";
+    goToDetails.appendChild(document.createTextNode("Go To Details"));
+    
+    goToDetailsLink = cdNode.appendChild(document.createElement("a"));
+    goToDetailsLink.appendChild(goToDetails);
+    goToDetailsLink.href = "ProdCat.html";
   }
   
   /*
@@ -148,8 +157,7 @@ function buildTree(pn) { // parentNode, tableRow
   goToDetailsLink = cdNode.appendChild(document.createElement("a"));
   goToDetailsLink.appendChild(goToDetails);
   goToDetailsLink.href = "ProdCat.html";
-*/
-  
+*/  
   // HTML for comment (if comment exists)
   if (tt[tr][4].trim()) {
     if (editCode !== "DEL") {
