@@ -13,9 +13,17 @@
 @media screen and (min-width: 0px) and (max-width: 799px) {
   /*.hack_main img.hide-on-small { display: none;}*/
   /*#bcc-copycat-headerpic { max-width: 50%; */
-#bcc-copycat-headerpic { display: none; }
+  #bcc-copycat-headerpic { display: none; }
   #comingsoon { max-width: 90%; /*display: none; */ }
 }
+
+@media screen and (min-width: 800px) {
+  #bcc-copycat-headerpic {
+      display: block;
+      margin: 0px;
+  }
+}
+
 
 body {
   /*background: #00ff00 url("bcc_middle.png") no-repeat fixed center;*/
@@ -25,6 +33,33 @@ body {
   margin: 0px;
 
 }
+
+/* Used for the Side Cleat */
+#bcc-cleat
+{
+    float: left;
+    height: 100%;
+    width: 7px;
+    position: fixed;
+    background: url('cleat.png') repeat-y scroll 0% 0% transparent;
+    z-index: 100;
+}
+
+/*  Header Styles*/
+#bcc-header
+{
+    height: 180px;
+    background: url("bcc_headerBG.png") #ffbe17 repeat-x scroll;
+    /*min-width: 950px;*/
+    overflow: hidden; /* hide the cropped portion */
+}
+
+
+/* HeaderContent Style */
+
+
+
+
 
 .hack_contract_summary
 {
@@ -123,53 +158,6 @@ body {
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */  
 }
-
-/* Used for the Side Cleat */
-#bcc-cleat
-{
-    float: left;
-    height: 100%;
-    width: 7px;
-    position: fixed;
-    background: url('cleat.png') repeat-y scroll 0% 0% transparent;
-    z-index: 100;
-}
-
-/*  Header Styles*/
-#bcc-header
-{
-    height: 180px;
-    background: url("bcc_headerBG.png") #ffbe17 repeat-x scroll;
-    /*min-width: 950px;*/
-    overflow: hidden; /* hide the cropped portion */
-}
-
-#bcc-footer999
-{
-    height: 180px;
-    background: url("bcc_footerBG.png") #ffbe17 repeat-x scroll;
-    min-width: 950px;
-
-    position: absolute;
-    bottom: 0;
-}
-
-/* HeaderContent Style */
-
-
-#bcc-copycat-headerpic
-{
-    display: block;
-    margin: auto;
-
-}
-
-#bcc-copycat-footerpic
-{
-    display: block;
-    margin: auto;
-}
-
 
 
 
