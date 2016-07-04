@@ -1,3 +1,103 @@
+.hack_contract_summary
+{
+    border: 1px solid #ddd;
+    text-align: left;
+    border-collapse: collapse;
+  
+}
+
+.hack_contract_summary th, td 
+{
+    padding: 9px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.hack_contract_summary th
+{
+    background-color: #4CAF50;
+    color: white;
+}
+
+.hack_contract_summary tr:nth-child(even) 
+{
+  background-color: #f2f2f2;
+}
+
+.rrrrhack_contract_summary suppliernr
+{
+  align: right;
+}
+
+.hack_channel
+{
+    border: 1px solid #ddd;
+    text-align: left;
+    border-collapse: collapse;  
+}
+
+.hack_channel th, .hack_channel tr td
+{
+  padding: 9px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.hack_channel th
+{
+    background-color: #ff9966;
+    color: #003366;
+}
+
+
+.instructions
+{
+  position: relative;
+  display: inline-block;
+  background-color: limegreen;
+  width: 10;
+  height: 10;
+  font-size: 15px;
+  color: black;  
+  border: 1px solid black;
+  -webkit-border-radius: 2px;
+  margin-left: 10px;
+  padding: 0px 2px 0px 2px;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */  
+}
+
+.launch
+{
+  position: relative;
+  display: inline-block;
+  background-color: #1a8cff;
+  width: 10;
+  height: 10;
+  font-size: 15px;
+  color: black;  
+  border: 1px solid black;
+  -webkit-border-radius: 2px;
+  margin-left: 10px;
+  padding: 0px 2px 0px 2px;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */  
+}
+
+
+
 body {
   background-color: #f0f0f0;
 }
