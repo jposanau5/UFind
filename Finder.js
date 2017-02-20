@@ -18,7 +18,8 @@ var tr = null,
     expandAllOptionInput = null,
     expandAllOptionLabel = null,
     showMarkupOptionInput = null,
-    showMarkupOptionLabel = null;
+    showMarkupOptionLabel = null,
+    expCollColour = "Gold";
 
   // *********************************************************************************
 // replace target text node with HTML containing spans around text to be highlighted
@@ -199,13 +200,13 @@ function buildTree(pn) { // parentNode, tableRow
     expCollNode = cdNode.appendChild(document.createElement("div"));
     expCollNode.className = "expColl";
     $(expCollNode).click(function () {
-      if ($(this).css("border-right-color") === "rgb(0, 0, 255)" || $(this).css("border-right-color") === "blue") {
+      if ($(this).css("border-right-color") === "rgb(255, 215, 0)" || $(this).css("border-right-color") === expCollColour) {
         $(this).css("border-right-color", "grey");
         $(this).css("border-top-color", "grey");
         $(this).parent().children("div.l" + (level + 1)).show();
       } else {
-        $(this).css("border-right-color", "blue");
-        $(this).css("border-top-color", "blue");
+        $(this).css("border-right-color", expCollColour);
+        $(this).css("border-top-color", expCollColour);
         $(this).parent().children("div.l" + (level + 1)).hide();
         //$(this).parent().children("div.l" + (level + 1) + ":has(span.highlight)").css("background-color", "grey");
         $(this).parent().children("div.l" + (level + 1) + ":has(span.highlight)").show();
@@ -336,8 +337,8 @@ $(document).ready(function () {
       
       if (expandAllOptionInput.checked === false) {
         //initialise all expand-collapse buttons to blue
-        $("div.expColl").css("border-right-color", "blue");
-        $("div.expColl").css("border-top-color", "blue");
+        $("div.expColl").css("border-right-color", expCollColour);
+        $("div.expColl").css("border-top-color", expCollColour);
         //internet explorer 8 seems slow to filter span.highlight
         //consider replacing span with another element type
         $("tr.cltrow:has(span.highlight)").show();
