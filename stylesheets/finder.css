@@ -163,8 +163,8 @@ label {
 
 .l0 {
   position: relative;
-  background-color: #abd4c7;
-  color: #ea4800;
+  background-color: white;
+  color: black;
   margin-bottom: 15px;
   padding: 10px 10px 1px 15px; /* top right bottom left */
   -webkit-border-radius: 3px;
@@ -176,8 +176,8 @@ label {
 .l1 {
   position: relative;
   /*width: 98%;*/
-  background-color: #FCF8E3;
-  color: #000099; /* navy; */
+  background-color: #e9e7e3;
+  color: black; /* navy; */
   margin-bottom: 10px;
   padding: 10px 5px 1px 15px; /* top right bottom left */
   -webkit-border-radius: 3px;
@@ -193,8 +193,8 @@ label {
   margin-bottom: 10px;
   padding: 6px 5px 6px 10px; /* top right bottom left */
   -webkit-border-radius: 3px;
-  background-color: #3A87AD;
-  color: #f2f2f2; /* #e6e6e6; */ /* #d3d3df; */ /* white; */
+  background-color: #c6d9f1;
+  color: black; /* #e6e6e6; */ /* #d3d3df; */ /* white; */
   font-size: 0.8em; 
 }
 
@@ -205,8 +205,8 @@ label {
   margin-bottom: 3px;
   padding: 3px 6px;
   -webkit-border-radius: 3px;
-  background-color: #9ce59c; /* palegreen; */
-  color: #004d4d; /* darkgreen; */
+  background-color: White; /* palegreen; */
+  color: black; /* darkgreen; */
   font-size: 0.8em; 
 }
 
@@ -222,22 +222,22 @@ label {
 
 .l0comment {
   font-size: 0.6em; 
-  color: red;
+  color: black;
 }
 
 .l1comment {
   font-size: 0.6em; 
-  color:blue;
+  color:black;
 }
 
 .l2comment {
   font-size: 0.6em; 
-  color:yellow;
+  color:black;
 }
 
 .l3or4comment {
   font-size: 0.686em; 
-  color:#8400d6;
+  color:black;
 }
 
 .contListTable {
